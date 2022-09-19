@@ -20,7 +20,7 @@ namespace Api.Gateway.Models.seeker.Commands
     [Serializable]
     public class IDataUser
     {
-        public string _idUser { get; set; }
+        public int idUsuario { get; set; }
         public string nombre { get; set; }
         public string cedula { get; set; }
         public string telefono { get; set; }
@@ -31,7 +31,7 @@ namespace Api.Gateway.Models.seeker.Commands
     [Serializable]
     public class IDataCompani
     {
-        public string _idCompani { get; set; }
+        public string idCompani { get; set; }
         public string nombre { get; set; }
         public string nit { get; set; }
         public string telefono { get; set; }
@@ -45,7 +45,7 @@ namespace Api.Gateway.Models.seeker.Commands
     [Serializable]
     public class IProducts
     {
-        public string _codigo { get; set; }
+        public int idProducto{ get; set; }
         public string descripcion { get; set; }
         public decimal valor_unidad { get; set; }
         public int cantidad { get; set; }

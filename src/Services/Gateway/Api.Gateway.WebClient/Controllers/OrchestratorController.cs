@@ -23,24 +23,7 @@ namespace Api.Gateway.WebClient.Controllers
             _OrchestratorProxy = orchestratorProxy;
         }
 
-        [HttpPost("Seeker/")]
-        public async Task<List<CasCreateCommand>> GetAll(CasSeekerCommandProxies command)
-        {
-            return await _OrchestratorProxy.GetOnlySeeker(command);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<CaRepositoryDto> Get(int id)
-        {
-            return await _OrchestratorProxy.GetAsync(id);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(CasCreateCommand command)
-        {
-            await _OrchestratorProxy.CreateAsync(command);
-            return Ok();
-        }
+       
 
         [HttpPost("Shoping")]
         public async Task<FacturaCommand> Shoping(DataRequest command)
