@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "d900e1c7-2fc3-479c-a2b7-833f7d71d5a6",
+		"name": "Prueba Tuya",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API Gategay",
+			"item": [
+				{
+					"name": "API Gateway",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"DataFactura\": {\r\n        \"idCompani\": \"52550b2c-194f-4d5e-820b-21717958bc62\",\r\n        \"nombre\": \"Tuya\",\r\n        \"nit\": \"4561321554\",\r\n        \"telefono\": \"601224557\",\r\n        \"ciudad\": \"Medellin\",\r\n        \"direccion\": \"calle 3 n 3-18\",\r\n        \"observacion\": \"calle 3 n 3-18\",\r\n        \"fechaFactura\": \"18-09-2022\",\r\n        \"estado\": \"Para envio\"\r\n    },\r\n    \"DataUser\": {\r\n        \"idUsuario\": 1234567878,\r\n        \"nombre\": \"Hernesto Frailejon\",\r\n        \"cedula\": \"123456780\",\r\n        \"telefono\": \"3103212145\",\r\n        \"correo\": \"prueba@tuya.com\"\r\n    },\r\n    \"Products\": [\r\n        {\r\n            \"idProducto\": 12345672,\r\n            \"descripcion\": \"Camiseta\",\r\n            \"valor_unidad\": 10000,\r\n            \"cantidad\": 1,\r\n            \"impuesto\": 19,\r\n            \"descuento\": 0\r\n        },\r\n        {\r\n            \"_codigo\": 12345678,\r\n            \"descripcion\": \"Pantalon\",\r\n            \"valor_unidad\": 10000,\r\n            \"cantidad\": 1,\r\n            \"impuesto\": 19,\r\n            \"descuento\": 0\r\n        },\r\n        {\r\n            \"_codigo\": 12345679,\r\n            \"descripcion\": \"Zapatillas\",\r\n            \"valor_unidad\": 10000,\r\n            \"cantidad\": 2,\r\n            \"impuesto\": 19,\r\n            \"descuento\": 10\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:52270/Orchestrator/Shoping"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API Facturas",
+			"item": [
+				{
+					"name": "Traer Facturas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:33278"
+					},
+					"response": []
+				},
+				{
+					"name": "Guardar Factura",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"IdFactura\": 21014512, \r\n    \"Observacion\": \"Prueba\",\r\n    \"Subtotal\": 100000,\r\n    \"Impuesto\": 19,\r\n    \"Total\": 100000,\r\n    \"Fecha\": \"18/09/2022\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:33278/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logistica",
+			"item": [
+				{
+					"name": "Pedidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:9634"
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar Pedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idPedido\": 21014515, \r\n    \"idProducto\": 12345672,\r\n    \"idCliente\": 100000,\r\n    \"observacion\": \"Delicado\",\r\n    \"direccion\": \"Calle 3 N 3-18\",\r\n    \"cantidad\": 5,\r\n    \"estado\": \"Enviado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:9634"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
