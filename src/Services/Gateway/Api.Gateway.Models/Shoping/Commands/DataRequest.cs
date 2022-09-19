@@ -10,7 +10,7 @@ namespace Api.Gateway.Models.seeker.Commands
         
      
         public IDataUser DataUser { get; set; }
-        public IDataCompani DataCompani { get; set; }
+        public IDataFactura DataFactura { get; set; }
         public ICollection<IProducts> Products { get; set; }
   
         public string valores { get; set; }
@@ -29,16 +29,17 @@ namespace Api.Gateway.Models.seeker.Commands
     }
 
     [Serializable]
-    public class IDataCompani
+    public class IDataFactura
     {
         public string idCompani { get; set; }
         public string nombre { get; set; }
         public string nit { get; set; }
         public string telefono { get; set; }
         public string ciudad { get; set; }
-        public long numFactura { get; set; }
+        public string direccion { get; set; }
         public string observacion { get; set; }
         public string fechaFactura { get; set; }
+        public string estado { get; set; }
 
     }
 

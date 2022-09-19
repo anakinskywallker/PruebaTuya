@@ -1,15 +1,12 @@
-﻿using Api.Gateway.Models.seeker.Commands;
-using Api.Gateway.Models.seeker.DTOs;
+﻿
+using Api.Gateway.Models.seeker.Commands;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 
 using System.Threading.Tasks;
 
@@ -36,24 +33,51 @@ namespace Api.Gateway.Proxies
             _apiUrls = apiUrls.Value;
         }
 
-        
+
         public async Task<FacturaCommand> ShopingLogic(DataRequest command)
         {
 
             var productList = command.Products.ToArray();
             var (subtotal, total, impuesto) = subtotalcalculate(productList);
-                       
-            FacturaCommand Factura = new FacturaCommand();
-                       
-            Random myObject = new Random();
-            int ranNum = myObject.Next(10000, 100000000);
 
+            Random ram = new Random();
+            int ranNum = ram.Next(10000, 100000000);
+
+            // Proceso para enviar un pedido a Lgistica 
+
+            PedidoCommand Pedido = new PedidoCommand();
+            for (var i = 0; i < productList.Length; i++) {
+            
+                    Pedido.idPedido = ranNum;
+                    Pedido.idProducto = productList[i].idProducto;
+                    Pedido.idCliente = command.DataUser.idUsuario;
+                    Pedido.observacion = command.DataFactura.observacion;
+                    Pedido.direccion = command.DataFactura.direccion;
+                    Pedido.cantidad = productList[i].cantidad;
+                    Pedido.estado = command.DataFactura.estado;
+
+                var contenidologistica = new StringContent(System.Text.Json.JsonSerializer.Serialize(Pedido),Encoding.UTF8,"application/json");
+
+                var requestPedido = await _httpClient.PostAsync($"{_apiUrls.PedidosUrl}", contenidologistica);
+                string auxJson = await requestPedido.Content.ReadAsStringAsync();
+                var jsonSeeker = JsonConvert.DeserializeObject<FacturaCommand>(auxJson);
+
+            }
+    
+
+
+
+            // Proceso para guardar la Factura y calcular el total de la compra 
+
+            FacturaCommand Factura = new FacturaCommand();
+            
             Factura.IdFactura = ranNum;
-            Factura.Observacion = command.DataCompani.observacion;
+            Factura.Observacion = command.DataFactura.observacion;
             Factura.Subtotal = subtotal;
-            Factura.Fecha = command.DataCompani.fechaFactura;
+            Factura.Fecha = command.DataFactura.fechaFactura;
             Factura.Impuesto = impuesto;
             Factura.Total = total;
+
 
             var content = new StringContent(
                System.Text.Json.JsonSerializer.Serialize(Factura),
@@ -62,14 +86,18 @@ namespace Api.Gateway.Proxies
            );
                    
 
-            var request = await _httpClient.PostAsync($"{_apiUrls.FacturasUrl}", content);
-            string auxJson = await request.Content.ReadAsStringAsync();
-            var jsonSeeker = JsonConvert.DeserializeObject<FacturaCommand>(auxJson);
-            return await Task.FromResult(jsonSeeker);
+            var requestFactura = await _httpClient.PostAsync($"{_apiUrls.FacturasUrl}", content);
+            string auxJsonFactura = await requestFactura.Content.ReadAsStringAsync();
+            var jsonSeekerFactura = JsonConvert.DeserializeObject<FacturaCommand>(auxJsonFactura);
+            return await Task.FromResult(jsonSeekerFactura);
 
         }
 
-        
+        public static void registrarPedido(IProducts[] productList, int ranNum)
+        {
+            
+
+        }
         public static (double, double, double) subtotalcalculate(IProducts[] productList) {
 
             double subtotal = 0;

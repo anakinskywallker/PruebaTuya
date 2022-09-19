@@ -1,5 +1,4 @@
 ﻿using Api.Gateway.Models.seeker.Commands;
-using Api.Gateway.Models.seeker.DTOs;
 using Api.Gateway.Proxies;
 using Microsoft.AspNetCore.Mvc;
 using System;
